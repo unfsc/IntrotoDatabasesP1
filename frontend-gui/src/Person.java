@@ -2,7 +2,7 @@ package src;
 
 public class Person {
     //Create private variables
-    private String n_number;
+    private String nNumber;
     private String firstName;
     private String lastName;
     private String SSN;
@@ -17,8 +17,8 @@ public class Person {
     private String homePhoneNumber;
 
     //Create getters and setters
-    public String getN_number() {
-        return n_number;
+    public String getnNumber() {
+        return nNumber;
     }
     public String getFirstName() {
         return firstName;
@@ -56,8 +56,8 @@ public class Person {
     public String getHomePhoneNumber() {
         return homePhoneNumber;
     }
-    public void setN_number(String n_number) {
-        this.n_number = n_number;
+    public void setnNumber(String nNumber) {
+        this.nNumber = nNumber;
     }
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -95,7 +95,7 @@ public class Person {
     public void setHomePhoneNumber(String homePhoneNumber) {
         this.homePhoneNumber = homePhoneNumber;
     }
-    
+
 
 
 }
