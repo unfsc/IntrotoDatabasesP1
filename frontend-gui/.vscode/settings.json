@@ -1,0 +1,6 @@
+{
+    "editor.wordWrap": "wordWrapColumn",
+    "diffEditor.wordWrap": "on",
+    "editor.wrappingIndent": "deepIndent",
+    "editor.wrappingStrategy": "advanced"
+}
