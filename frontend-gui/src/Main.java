@@ -1,187 +1,291 @@
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
+package src;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.util.Scanner;
 
 public class Main {
-    private static void initGui() {
-        JFrame frame = new JFrame("Frontend GUI");
-        int width = 900;
-        int height = 600;
-        frame.pack();
-        frame.setSize(width, height);
+    private static String USERNAME = new String("G16");
+    private static String PASSWORD = new String("Fall2022G16");
+    private static String DB_URL = new String("jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl");
 
-        createOptionMenu(frame);
+    public static String getString() {
+        try {
+            StringBuffer buffer = new StringBuffer();
 
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setResizable(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
-    }
+            int c = System.in.read();
+            while (c != '\n' && c != -1) {
+                buffer.append((char) c);
+                c = System.in.read();
+            }
 
-    private static void createOptionMenu(JFrame frame) {
-        JMenuBar menuBar = new JMenuBar();
-        Border emptyBorder = BorderFactory.createEmptyBorder();
+            return buffer.toString().trim();
 
-        JButton menuItem1 = new JButton(
-                "<html>Add a new <br>" +
-                        "entity type to the <br>" +
-                        "database</html>");
-        menuItem1.setBorder(emptyBorder);
-
-        JButton menuItem2 = new JButton(
-                "<html>Add a student <br>" +
-                        "to specified <br>" +
-                        "course or <br>section</html>");
-        menuItem2.setBorder(emptyBorder);
-        JButton menuItem3 = new JButton(
-                "<html>Calculate a <br>" +
-                        "student's GPA</html>");
-        menuItem3.setBorder(emptyBorder);
-        JButton menuItem4 = new JButton(
-                "<html>Search <br>" +
-                        "for courses <br>" +
-                        "offered by a department</html>");
-        menuItem4.setBorder(emptyBorder);
-        JButton menuItem5 = new JButton(
-                "<html>List all <br>" +
-                        "course sections<br>" +
-                        "previously taught<br>" +
-                        "by an instructor</html>");
-        menuItem5.setBorder(emptyBorder);
-        JButton menuItem6 = new JButton(
-                "<html>Add/update <br>" +
-                        "a grade for a <br> " +
-                        "student in a course</html>");
-        menuItem6.setBorder(emptyBorder);
-
-        menuItem1.addActionListener((ActionEvent e) -> {
-            createInputPane(frame, "1");
-        });
-        menuItem2.addActionListener((ActionEvent e) -> {
-            createInputPane(frame, "2");
-
-        });
-        menuItem3.addActionListener((ActionEvent e) -> {
-            createInputPane(frame, "3");
-
-        });
-        menuItem4.addActionListener((ActionEvent e) -> {
-            createInputPane(frame, "4");
-
-        });
-        menuItem5.addActionListener((ActionEvent e) -> {
-            createInputPane(frame, "5");
-
-        });
-        menuItem6.addActionListener((ActionEvent e) -> {
-            createInputPane(frame, "6");
-
-        });
-
-        menuBar.add(menuItem1);
-        menuBar.add(menuItem2);
-        menuBar.add(menuItem3);
-        menuBar.add(menuItem4);
-        menuBar.add(menuItem5);
-        menuBar.add(menuItem6);
-
-        frame.setJMenuBar(menuBar);
-    }
-
-    public static void createInputPane(JFrame frame, String option) {
-
-        JPanel inputPane = new JPanel();
-
-        switch (option) {
-            case "1":
-                JLabel label = new JLabel("Enter the name of the entity you want to add");
-                JTextField textField = new JTextField(20);
-                JButton button = new JButton("Submit");
-                addTuple(inputPane, option);
-                break;
-            case "2":
-                JLabel title = new JLabel("Add Student to Course");
-                JLabel label2 = new JLabel("Name");
-                JTextField textField2 = new JTextField(20);
-                JButton button2 = new JButton("Submit");
-                button2.addActionListener((ActionEvent e) -> {
-                    String input = textField2.getText();
-                    if (input.length() == 0) {
-                        System.out.println("Please enter a name");
-                    } else {
-                        System.out.println("Name: " + input);
-                    }
-
-                });
-                JLabel label3 = new JLabel("Course");
-                JTextField textField3 = new JTextField(20);
-                JButton button3 = new JButton("Submit");
-                button3.addActionListener((ActionEvent e) -> {}
-
-                break;
-            case "3":
-                JLabel label3 = new JLabel("");
-                JTextField textField3 = new JTextField(20);
-                JButton button3 = new JButton("Submit");
-
-                break;
-            case "4":
-                JLabel label4 = new JLabel("");
-                JTextField textField4 = new JTextField(20);
-                JButton button4 = new JButton("Submit");
-
-                break;
-            case "5":
-                JLabel label5 = new JLabel("");
-                JTextField textField5 = new JTextField(20);
-                JButton button5 = new JButton("Submit");
-
-                break;
-            case "6":
-                JLabel label6 = new JLabel("");
-                JTextField textField6 = new JTextField(20);
-                JButton button6 = new JButton("Submit");
-
-                break;
-            default:
-                break;
+        } catch (IOException e) {
+            return "";
         }
-        frame.add(inputPane);
-        frame.revalidate();
-        frame.repaint();
     }
 
-    private static void addTuple(JPanel inputPane, String entityType) {
-        System.out.print(entityType);
-        List<String> attribs = new ArrayList<>();
+    public static int getInt() {
+        return Integer.parseInt(getString());
+    }
+
+    public static float getFloat() {
+        return Float.parseFloat(getString());
+    }
+
+    private static boolean printSQLExceptions(SQLException ex) {
+        boolean rc = false;
+        if (ex != null) {
+            System.out.println("\nSQL EXCEPTION\n");
+            rc = true;
+            while (ex != null) {
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("Message:  " + ex.getMessage());
+                System.out.println("Vendor:   " + ex.getErrorCode());
+                System.out.println("");
+                ex = ex.getNextException();
+            }
+        }
+        return rc;
+    }
+
+    static public void printDriverInfo(Connection conn) throws SQLException {
+        DatabaseMetaData dma = conn.getMetaData();
+        System.out.println("Database\t" + dma.getDatabaseProductVersion());
+        System.out.println("Driver\t\t" + dma.getDriverVersion());
+        System.out.println("URL\t\t" + dma.getURL() + ", user '" +
+                dma.getUserName() + "'");
+        System.out.println("-------------------------------------");
+    }
+
+    static public void displayResultSet(ResultSet rs) throws SQLException {
+        int i;
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int numCols = rsmd.getColumnCount();
+        for (i = 1; i <= numCols; i++) {
+            if (i > 1)
+                System.out.print(",");
+            System.out.print(rsmd.getColumnLabel(i));
+        }
+        System.out.println("\n-------------------------------------");
+        while (rs.next()) {
+            for (i = 1; i <= numCols; i++) {
+                if (i > 1)
+                    System.out.print(",");
+                System.out.print(rs.getString(i));
+            }
+            System.out.println("");
+        }
+    }
+
+    static public boolean printSQLWarnings(SQLWarning warn) throws SQLException {
+        boolean rc = false;
+        if (warn != null) {
+            System.out.println("\n *** Warning ***\n");
+            rc = true;
+            while (warn != null) {
+                System.out.println("SQLState: " + warn.getSQLState());
+                System.out.println("Message:  " + warn.getMessage());
+                System.out.println("Vendor:   " + warn.getErrorCode());
+                System.out.println("");
+                warn = warn.getNextWarning();
+            }
+        }
+        return rc;
+    }
+
+    public static PreparedStatement addSomeEntity(String entityType, Connection conn)
+            throws SQLException {
+
+        Scanner scanner = new Scanner(System.in);
+
+        PreparedStatement pstmt = null;
 
         switch (entityType.toLowerCase()) {
-            case "person":
-                JLabel name = new JLabel("Name");
-                JLabel birthDate = new JLabel("Birth date");
-
-                JTextField textField = new JTextField(20);
-                JButton button = new JButton("Submit");
-                button.addActionListener((ActionEvent e) -> {
-                    attribs.add(textField.getText());
-                });
+            case "student":
+                pstmt = addStudent(conn);
+                break;
+            case "department":
+                // addDepartment();
+                break;
+            case "course":
+                // addCourse();
+                break;
+            case "instructor":
+                // addInstructor();
+                break;
+            case "section":
+                // addSection();
+                break;
+            default:
+                System.out.println("Invalid input!");
                 break;
         }
+        return pstmt;
+
+    }
+
+    public static PreparedStatement addSection(Connection conn) throws SQLException {
+        return pstmt;
+    }
+
+    public static PreparedStatement addInstructor(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(
+                "INSERT INTO INSTRUCTOR (SSN,N_NUMBER, DEPARTMENT, OFFICE_NO)" +
+                        "VALUES ('21-212-2121', 'N09812098', 'Computer Science', 3)");
+
+        System.out.println("Enter the instructor's SSN: ");
+        String ssn = getString();
+        System.out.println("Enter the instructor's N-Number: ");
+        String nNumber = getString();
+        System.out.println("Enter the instructor's department: ");
+        String department = getString();
+        System.out.println("Enter the instructor's office number: ");
+        int officeNumber = getInt();
+        pstmt.setString(1, ssn);
+        pstmt.setString(2, nNumber);
+        pstmt.setString(3, department);
+        pstmt.setInt(4, officeNumber);
+
+        return pstmt;
+    }
+
+    public static PreparedStatement addCourse(Connection conn) throws SQLException {
+        return pstmt;
+    }
+
+    public static PreparedStatement addDepartment(Connection conn) throws SQLException {
+
+        return pstmt;
+    }
+
+    public static PreparedStatement addStudent(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(
+                "INSERT INTO STUDENT (N_NUMBER, CLASS, DEGREE_TYPE)" +
+                        "VALUES (?, ?, ?)");
+
+        System.out.println("Enter student n-number: ");
+        String nNumber = getString();
+        System.out.println("Enter student class: ");
+        String className = getString();
+        System.out.println("Enter student degree type: ");
+        String degreeType = getString();
+
+        pstmt.setString(1, nNumber);
+        pstmt.setString(2, className);
+        pstmt.setString(3, degreeType);
+
+        return pstmt;
+
+    }
+
+    private static PreparedStatement addStudentToClass(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(
+                "INSERT INTO ENROLLED_IN  (N_NUMBER, COURSE_NUMBER)" +
+                        "VALUES (?, ?)");
+
+        System.out.println("Enter course number: ");
+        String courseName = getString();
+        System.out.println("Enter section number: ");
+        String sectionNumber = getString();
+        System.out.println("Enter semester: ");
+        String semester = getString();
+        System.out.println("Enter year: ");
+        String year = getString();
+        System.out.println("Enter n-number: ");
+        String nNumber = getString();
+
+        return pstmt;
+    }
+
+    public static void getStudentGPA(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(
+                "SELECT GPA FROM STUDENT WHERE N_NUMBER = ?");
+
+        System.out.println("Enter student n-number: ");
+        String nNumber = getString();
+
+        pstmt.setString(1, nNumber);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            System.out.println("Student GPA: " + rs.getString(1));
+        } else {
+            System.out.println("Student not found!");
+        }
+    }
+
+    private static PreparedStatement addGrade(Connection conn) {
+        return null;
     }
 
     public static void main(String[] args) {
-        initGui();
+
+        try {
+            // load JDBC driver
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            // establish connection
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+
+            printDriverInfo(conn);
+
+            Scanner in = new Scanner(System.in);
+
+            System.out.print("What would you like to do?\n" +
+                    "1. Add a new entity to the database\n" +
+                    "2. Add a student to a course\n" +
+                    "3. Given a student's Nnumber generate their grade report. \n" +
+                    "4. Given an instructor's Nnumber list all the course sections they have taught.\n" +
+                    "5. Given a department name or code find the courses offered.\n" +
+                    "6. Add a grade to a given student for a given course/section.\n" +
+                    "7. Exit\n");
+
+            String option = in.nextLine();
+
+            switch (option) {
+                case "1":
+                    System.out.println("What kind of entity would you like to add?");
+                    String entityType = in.nextLine();
+                    PreparedStatement pstmt = addSomeEntity(entityType, conn);
+                    pstmt.executeUpdate();
+                    break;
+                case "2":
+                    pstmt = addStudentToClass(conn);
+                    break;
+                case "3":
+                    getStudentGPA(conn);
+                    break;
+                case "4":
+                    pstmt = listTaughtSections(conn);
+                    pstmt.executeQuery();
+                    break;
+                case "5":
+                    pstmt = listDeptCourses(conn);
+                    pstmt.executeQuery();
+                    break;
+                case "6":
+                    pstmt = addGrade(conn);
+                    pstmt.executeUpdate();
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
+
+            in.close();
+            conn.close();
+        } catch (SQLException e) {
+            printSQLExceptions(e);
+        }
     }
+
 }

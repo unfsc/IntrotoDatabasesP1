@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/kyleconverse/kconv/school/introToDatabases/ojdbc11.jar"
+    ]
+}
