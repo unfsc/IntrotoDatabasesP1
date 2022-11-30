@@ -114,16 +114,16 @@ public class Main {
                 pstmt = addStudent(conn);
                 break;
             case "department":
-                // addDepartment();
+                pstmt = addDepartment(conn);
                 break;
             case "course":
-                // addCourse();
+                // addCourse(conn);
                 break;
             case "instructor":
-                // addInstructor();
+                // addInstructor(conn);
                 break;
             case "section":
-                // addSection();
+                // addSection(conn);
                 break;
             default:
                 System.out.println("Invalid input!");
@@ -262,19 +262,23 @@ public class Main {
                     pstmt = addStudentToClass(conn);
                     break;
                 case "3":
+                    // TODO
                     getStudentGPA(conn);
                     break;
                 case "4":
-                    pstmt = listTaughtSections(conn);
-                    pstmt.executeQuery();
+                    // TODO
+                    // pstmt = listTaughtSections(conn);
+                    // pstmt.executeQuery();
                     break;
                 case "5":
-                    pstmt = listDeptCourses(conn);
-                    pstmt.executeQuery();
+                    // TODO
+                    // pstmt = listDeptCourses(conn);
+                    // pstmt.executeQuery();
                     break;
                 case "6":
-                    pstmt = addGrade(conn);
-                    pstmt.executeUpdate();
+                    // TODO
+                    // pstmt = addGrade(conn);
+                    // pstmt.executeUpdate();
                     break;
                 default:
                     System.out.println("Invalid option");
