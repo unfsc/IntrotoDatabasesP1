@@ -109,18 +109,26 @@ public class Main {
                 JLabel label = new JLabel("Enter the name of the entity you want to add");
                 JTextField textField = new JTextField(20);
                 JButton button = new JButton("Submit");
-
                 addTuple(inputPane, option);
                 break;
             case "2":
-                JLabel label2 = new JLabel("");
+                JLabel title = new JLabel("Add Student to Course");
+                JLabel label2 = new JLabel("Name");
                 JTextField textField2 = new JTextField(20);
                 JButton button2 = new JButton("Submit");
                 button2.addActionListener((ActionEvent e) -> {
                     String input = textField2.getText();
-                    List<String> inputList = new ArrayList<String>();
+                    if (input.length() == 0) {
+                        System.out.println("Please enter a name");
+                    } else {
+                        System.out.println("Name: " + input);
+                    }
 
                 });
+                JLabel label3 = new JLabel("Course");
+                JTextField textField3 = new JTextField(20);
+                JButton button3 = new JButton("Submit");
+                button3.addActionListener((ActionEvent e) -> {}
 
                 break;
             case "3":
