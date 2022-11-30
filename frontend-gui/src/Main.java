@@ -1,7 +1,8 @@
+package src;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -106,35 +107,27 @@ public class Main {
 
         switch (option) {
             case "1":
-                JLabel label = new JLabel("Enter the name of the entity you want to add");
-                JTextField textField = new JTextField(20);
-                JButton button = new JButton("Submit");
+                addField(inputPane, option, "Entity Type");
                 addTuple(inputPane, option);
+                frame.add(inputPane);
                 break;
             case "2":
-                JLabel title = new JLabel("Add Student to Course");
-                JLabel label2 = new JLabel("Name");
-                JTextField textField2 = new JTextField(20);
-                JButton button2 = new JButton("Submit");
-                button2.addActionListener((ActionEvent e) -> {
-                    String input = textField2.getText();
-                    if (input.length() == 0) {
-                        System.out.println("Please enter a name");
-                    } else {
-                        System.out.println("Name: " + input);
-                    }
+                Student student = new Student();
+                Course course = new Course();
 
-                });
-                JLabel label3 = new JLabel("Course");
+                JLabel title = new JLabel("Add Student to Course");
+                JLabel nameLabel = new JLabel("Name");
+                // createField(button2);
+                JLabel courselabel = new JLabel("Course");
                 JTextField textField3 = new JTextField(20);
                 JButton button3 = new JButton("Submit");
-                button3.addActionListener((ActionEvent e) -> {}
+                button3.addActionListener((ActionEvent e) -> {
+                });
+                JLabel nNumberLabel = new JLabel("N Number");
+                // createField(button3);
 
                 break;
             case "3":
-                JLabel label3 = new JLabel("");
-                JTextField textField3 = new JTextField(20);
-                JButton button3 = new JButton("Submit");
 
                 break;
             case "4":
@@ -163,14 +156,39 @@ public class Main {
         frame.repaint();
     }
 
+    private static void addField(JPanel inputPane, String option, String message) {
+        JLabel label = new JLabel(message);
+        JTextField textField = new JTextField(20);
+        JButton button = new JButton("Submit");
+
+        addTuple(inputPane, option);
+        inputPane.add(label);
+        inputPane.add(textField);
+
+    }
+
+    public static void listen(JButton button, String option, ArrayList<String> List) {
+        button.addActionListener((ActionEvent e) -> {
+            List.add("test");
+        });
+    }
+
     private static void addTuple(JPanel inputPane, String entityType) {
         System.out.print(entityType);
-        List<String> attribs = new ArrayList<>();
+        ArrayList<String> attribs = new ArrayList<>();
 
         switch (entityType.toLowerCase()) {
             case "person":
-                JLabel name = new JLabel("Name");
-                JLabel birthDate = new JLabel("Birth date");
+                JLabel ssnLabel = new JLabel("SSN");
+
+                JLabel nameLabel = new JLabel("Name");
+                JLabel birthDateLabel = new JLabel("Birth date");
+                JLabel addressLabel = new JLabel("Address");
+                JLabel zipLabel = new JLabel("Zip Code");
+                JLabel state = new JLabel("State");
+                JLabel city = new JLabel("City");
+                JLabel phoneLabel = new JLabel("Phone Number");
+                JLabel currentAddress = new JLabel("Email");
 
                 JTextField textField = new JTextField(20);
                 JButton button = new JButton("Submit");
