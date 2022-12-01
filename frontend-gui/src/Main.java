@@ -337,7 +337,8 @@ public class Main {
     }
 
     public static PreparedStatement getStudentGPA(Connection conn) throws SQLException {
-        PreparedStatement pstmt = conn.prepareStatement("");
+        PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM SECTION WHERE student = ?");
+       
 
         return pstmt;
     }
