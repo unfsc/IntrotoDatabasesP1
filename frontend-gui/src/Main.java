@@ -169,7 +169,7 @@ public class Main {
     public static PreparedStatement addCourse(Connection conn) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(
                 "INSERT INTO COURSE (COURSE_NO, COURSE_NAME, DESCRIPTION, OFFERING_DEPT, COURSE_LEVEL, COURSE_HOURS)" +
-                        "VALUES (? ? ? ? ? ?)");
+                        "VALUES (?, ?, ?, ?, ?, ?)");
         System.out.println("Enter the course's course number: ");
         String courseNumber = getString();
         System.out.println("Enter the course's name: ");
@@ -347,20 +347,19 @@ public class Main {
     }
 
     public static PreparedStatement getStudentGPA(Connection conn) throws SQLException {
-        PreparedStatement pstmt = conn.prepareStatement(
-                "SELECT GPA FROM STUDENT WHERE N_NUMBER = ?");
+        PreparedStatement pstmt = conn.prepareStatement("");
 
-            return pstmt;
+        return pstmt;
     }
 
     private static PreparedStatement addGrade(Connection conn) throws SQLException {
-                PreparedStatement pstmt = conn.prepareStatement(
+        PreparedStatement pstmt = conn.prepareStatement(
                 "UPDATE ENROLLED_IN SET grade_earned = ? " +
-                "WHERE N_NUMBER = ?"+
-                "and course_number = ?"+
-                "and semester = ?"+ 
-                "and year = ?");
-                return pstmt;
+                        "WHERE N_NUMBER = ?" +
+                        "and course_number = ?" +
+                        "and semester = ?" +
+                        "and year = ?");
+        return pstmt;
     }
 
     public static void main(String[] args) {
