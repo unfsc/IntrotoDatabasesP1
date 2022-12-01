@@ -218,7 +218,7 @@ public class Main {
         pstmt.setString(5, college);
 
         int rowsAdded = pstmt.executeUpdate();
-        System.out.println(rowsAdded + " department added successfully");
+        System.out.println("\n" + rowsAdded + " department added successfully\n");
 
         return pstmt;
     }
@@ -226,8 +226,26 @@ public class Main {
     public static PreparedStatement addPerson(Connection conn) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(
                 "INSERT INTO PERSON (SSN, PNAME, BIRTH_DATE, SEX, N_NUMBER, STREET_NO, ADDRESS_STREET, ZIP_CODE, STATE, CITY, PHONE_NUMBER, CURRENT_ADDRESS, PERMANENT_PHONE)"
-                        +
-                        "VALUES (? ? ? ? ? ? ? ? ? ? ? ? ?)");
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        // Alex Smith, N02345678, 345-22-1567, 123 West Drive, Jacksonville, FL 36182,
+        // 094-123-6588, 123 West Drive, Jacksonville, FL 36182,
+        // 094-123-6588,08/12/2004, Male, Freshman, CS, EE, B.S.
+
+        // String ssn = "345-22-1234";
+        // String name = "Alex Smith";
+        // String sbirthDate = "2004-08-12";
+        // Date birthDate = Date.valueOf(sbirthDate);
+        // String sex = "M";
+        // String nNumber = "N02345678";
+        // int streetNumber = 123;
+        // String streetName = "West Drive";
+        // int zipCode = 36182;
+        // String state = "FL";
+        // String city = "Jacksonville";
+        // String phoneNumber = "094-123-6588";
+        // String currentAddress = "123 West Drive, Jacksonville, FL 36182";
+        // String permanentPhone = "094-123-6588";
 
         System.out.println("Enter the person's SSN: ");
         String ssn = getString();
@@ -242,8 +260,8 @@ public class Main {
         String nNumber = getString();
         System.out.println("Enter the person's street number: ");
         int streetNumber = getInt();
-        System.out.println("Enter the person's street address: ");
-        String address = getString();
+        System.out.println("Enter the person's street name: ");
+        String streetName = getString();
         System.out.println("Enter the person's zip code: ");
         int zipCode = getInt();
         System.out.println("Enter the person's state: ");
@@ -263,7 +281,7 @@ public class Main {
         pstmt.setString(4, sex);
         pstmt.setString(5, nNumber);
         pstmt.setInt(6, streetNumber);
-        pstmt.setString(7, address);
+        pstmt.setString(7, streetName);
         pstmt.setInt(8, zipCode);
         pstmt.setString(9, state);
         pstmt.setString(10, city);
@@ -271,14 +289,15 @@ public class Main {
         pstmt.setString(12, currentAddress);
         pstmt.setString(13, permanentPhone);
 
-        pstmt.executeUpdate();
+        int rowsAdded = pstmt.executeUpdate();
+        System.out.println("\n" + rowsAdded + " person added successfully\n");
 
         return pstmt;
     }
 
     public static PreparedStatement addStudent(Connection conn) throws SQLException {
 
-        // addPerson(conn);
+        addPerson(conn);
 
         PreparedStatement pstmt = conn.prepareStatement(
                 "INSERT INTO STUDENT (N_NUMBER, CLASS, DEGREE_TYPE)" +
@@ -295,7 +314,8 @@ public class Main {
         pstmt.setString(2, className);
         pstmt.setString(3, degreeType);
 
-        pstmt.executeUpdate();
+        int rowsAdded = pstmt.executeUpdate();
+        System.out.println("\n" + rowsAdded + " student added successfully\n");
 
         return pstmt;
 
