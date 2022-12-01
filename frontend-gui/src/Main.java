@@ -133,7 +133,7 @@ public class Main {
                 System.out.println("Invalid input!");
                 break;
         }
-
+        scanner.close();
         return pstmt;
     }
 
@@ -350,12 +350,14 @@ public class Main {
         PreparedStatement pstmt = conn.prepareStatement(
                 "SELECT GPA FROM STUDENT WHERE N_NUMBER = ?");
 
-        return pstmt;
+            return pstmt;
     }
 
     private static PreparedStatement addGrade(Connection conn) {
-
-        return null;
+        PreparedStatement pstmt = conn.prepareStatement(
+                "UPDATE ENROLLED_IN SET grade_earned = ? WHERE N_NUMBER = ?");
+                
+        return pstmt;
     }
 
     public static void main(String[] args) {
