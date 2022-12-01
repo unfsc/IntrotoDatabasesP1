@@ -361,6 +361,11 @@ public class Main {
                         "and year = ?");
         return pstmt;
     }
+    private static PreparedStatement listDeptCourses(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(
+                "Select * from COURSE where Offering_Dept = ?");
+        return pstmt;
+    }
 
     public static void main(String[] args) {
 
@@ -405,14 +410,14 @@ public class Main {
                         // pstmt.executeQuery();
                         break;
                     case "5":
-                        // TODO
-                        // pstmt = listDeptCourses(conn);
-                        // pstmt.executeQuery();
+                        // COMPLETED
+                        pstmt = listDeptCourses(conn);
+                        pstmt.executeQuery();
                         break;
                     case "6":
-                        // TODO
-                        // pstmt = addGrade(conn);
-                        // pstmt.executeUpdate();
+                        // COMPLETED
+                        pstmt = addGrade(conn);
+                        pstmt.executeUpdate();
                         break;
                     case "7":
                         System.out.println("Exiting");
