@@ -13,7 +13,9 @@ import java.sql.SQLWarning;
 import java.util.Scanner;
 
 public class Main {
+    // private static String USERNAME = new String("N01509014");
     private static String USERNAME = new String("G16");
+    // private static String PASSWORD = new String("Fall20229014");
     private static String PASSWORD = new String("Fall2022G16");
     private static String DB_URL = new String("jdbc:oracle:thin:@cisvm-oracle.unfcsd.unf.edu:1521:orcl");
 
@@ -133,8 +135,9 @@ public class Main {
                 System.out.println("Invalid input!");
                 break;
         }
-        scanner.close();
+
         return pstmt;
+
     }
 
     public static PreparedStatement addSection(Connection conn) throws SQLException {
@@ -144,9 +147,11 @@ public class Main {
     }
 
     public static PreparedStatement addInstructor(Connection conn) throws SQLException {
+        addPerson(conn);
+
         PreparedStatement pstmt = conn.prepareStatement(
                 "INSERT INTO INSTRUCTOR (SSN, N_NUMBER, DEPARTMENT, OFFICE_NO)" +
-                        "VALUES (? ? ? ?)");
+                        "VALUES (?, ?, ?, ?)");
 
         System.out.println("Enter the instructor's SSN: ");
         String ssn = getString();
@@ -161,7 +166,8 @@ public class Main {
         pstmt.setString(3, department);
         pstmt.setInt(4, officeNumber);
 
-        pstmt.executeUpdate();
+        int rowsAdded = pstmt.executeUpdate();
+        System.out.println("\n" + rowsAdded + " instructor added to the table.\n");
 
         return pstmt;
     }
@@ -170,6 +176,7 @@ public class Main {
         PreparedStatement pstmt = conn.prepareStatement(
                 "INSERT INTO COURSE (COURSE_NO, COURSE_NAME, DESCRIPTION, OFFERING_DEPT, COURSE_LEVEL, COURSE_HOURS)" +
                         "VALUES (?, ?, ?, ?, ?, ?)");
+
         System.out.println("Enter the course's course number: ");
         String courseNumber = getString();
         System.out.println("Enter the course's name: ");
@@ -179,7 +186,7 @@ public class Main {
         System.out.println("Enter the course's offering department: ");
         String offeringDepartment = getString();
         System.out.println("Enter the course's level: ");
-        String courseLevel = getString();
+        int courseLevel = getInt();
         System.out.println("Enter the course's hours: ");
         int courseHours = getInt();
 
@@ -187,10 +194,11 @@ public class Main {
         pstmt.setString(2, courseName);
         pstmt.setString(3, description);
         pstmt.setString(4, offeringDepartment);
-        pstmt.setString(5, courseLevel);
+        pstmt.setInt(5, courseLevel);
         pstmt.setInt(6, courseHours);
 
-        pstmt.executeUpdate();
+        int rowsAdded = pstmt.executeUpdate();
+        System.out.println("\n" + rowsAdded + " course added to the table.\n");
 
         return pstmt;
     }
@@ -218,7 +226,7 @@ public class Main {
         pstmt.setString(5, college);
 
         int rowsAdded = pstmt.executeUpdate();
-        System.out.println("\n" + rowsAdded + " department added successfully\n");
+        System.out.println("\n" + rowsAdded + " department added to the table\n");
 
         return pstmt;
     }
@@ -227,25 +235,6 @@ public class Main {
         PreparedStatement pstmt = conn.prepareStatement(
                 "INSERT INTO PERSON (SSN, PNAME, BIRTH_DATE, SEX, N_NUMBER, STREET_NO, ADDRESS_STREET, ZIP_CODE, STATE, CITY, PHONE_NUMBER, CURRENT_ADDRESS, PERMANENT_PHONE)"
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-        // Alex Smith, N02345678, 345-22-1567, 123 West Drive, Jacksonville, FL 36182,
-        // 094-123-6588, 123 West Drive, Jacksonville, FL 36182,
-        // 094-123-6588,08/12/2004, Male, Freshman, CS, EE, B.S.
-
-        // String ssn = "345-22-1234";
-        // String name = "Alex Smith";
-        // String sbirthDate = "2004-08-12";
-        // Date birthDate = Date.valueOf(sbirthDate);
-        // String sex = "M";
-        // String nNumber = "N02345678";
-        // int streetNumber = 123;
-        // String streetName = "West Drive";
-        // int zipCode = 36182;
-        // String state = "FL";
-        // String city = "Jacksonville";
-        // String phoneNumber = "094-123-6588";
-        // String currentAddress = "123 West Drive, Jacksonville, FL 36182";
-        // String permanentPhone = "094-123-6588";
 
         System.out.println("Enter the person's SSN: ");
         String ssn = getString();
@@ -290,7 +279,7 @@ public class Main {
         pstmt.setString(13, permanentPhone);
 
         int rowsAdded = pstmt.executeUpdate();
-        System.out.println("\n" + rowsAdded + " person added successfully\n");
+        System.out.println("\n" + rowsAdded + " person added to the table\n");
 
         return pstmt;
     }
@@ -315,7 +304,7 @@ public class Main {
         pstmt.setString(3, degreeType);
 
         int rowsAdded = pstmt.executeUpdate();
-        System.out.println("\n" + rowsAdded + " student added successfully\n");
+        System.out.println("\n" + rowsAdded + " student added to the table\n");
 
         return pstmt;
 
@@ -343,7 +332,8 @@ public class Main {
         pstmt.setString(4, semester);
         pstmt.setString(5, year);
 
-        pstmt.executeUpdate();
+        int rowsAdded = pstmt.executeUpdate();
+        System.out.println("\n" + rowsAdded + " student added to the table\n");
     }
 
     public static PreparedStatement getStudentGPA(Connection conn) throws SQLException {
@@ -362,20 +352,14 @@ public class Main {
         return pstmt;
     }
 
-    public static void main(String[] args) {
+    private static void userOptions(Connection conn) {
+        String option = "";
 
-        try {
-            // load JDBC driver
-            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            // establish connection
-            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        Scanner in = new Scanner(System.in);
 
-            printDriverInfo(conn);
+        while (!option.equals("7")) {
+            try {
 
-            String option = "";
-
-            Scanner in = new Scanner(System.in);
-            while (!option.equals("7")) {
                 System.out.print("What would you like to do?\n" +
                         "1. Add a new entity to the database\n" +
                         "2. Add a student to a course\n" +
@@ -392,7 +376,7 @@ public class Main {
                         System.out.println("What kind of entity would you like to add?");
                         String entityType = in.nextLine();
                         addSomeEntity(entityType, conn);
-                        break;
+                        continue;
                     case "2":
                         addStudentToClass(conn);
                         break;
@@ -421,12 +405,29 @@ public class Main {
                         System.out.println("Invalid option");
                         break;
                 }
+            } catch (SQLException e) {
+                printSQLExceptions(e);
             }
             in.close();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            // load JDBC driver
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            // establish connection
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+
+            printDriverInfo(conn);
+
+            userOptions(conn);
             conn.close();
         } catch (SQLException e) {
             printSQLExceptions(e);
         }
+
     }
 
 }
