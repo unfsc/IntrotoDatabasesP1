@@ -353,15 +353,14 @@ public class Main {
             return pstmt;
     }
 
-    private static PreparedStatement addGrade(Connection conn) {
-        PreparedStatement pstmt = conn.prepareStatement(
+    private static PreparedStatement addGrade(Connection conn) throws SQLException {
+                PreparedStatement pstmt = conn.prepareStatement(
                 "UPDATE ENROLLED_IN SET grade_earned = ? " +
-                    "WHERE N_NUMBER = ?"+
-                    "and course_number = ?"+
-                    "and semester = ?"+ 
-                    "and year = ?");
-
-        return pstmt;
+                "WHERE N_NUMBER = ?"+
+                "and course_number = ?"+
+                "and semester = ?"+ 
+                "and year = ?");
+                return pstmt;
     }
 
     public static void main(String[] args) {
