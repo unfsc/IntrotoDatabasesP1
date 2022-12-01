@@ -341,6 +341,16 @@ public class Main {
 
         return pstmt;
     }
+    private static PreparedStatement listTaughtSections (Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM SECTION WHERE instructor = ?");
+
+        return pstmt;
+    }
+
+    private static PreparedStatement listDeptCourses(Connection conn) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement("Select * from COURSE where Offering_Dept = ?");
+        return pstmt;
+    }
 
     private static PreparedStatement addGrade(Connection conn) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(
@@ -385,18 +395,18 @@ public class Main {
                         break;
                     case "4":
                         // TODO
-                        // pstmt = listTaughtSections(conn);
-                        // pstmt.executeQuery();
+                        pstmt = listTaughtSections(conn);
+                        pstmt.executeQuery();
                         break;
                     case "5":
-                        // TODO
-                        // pstmt = listDeptCourses(conn);
-                        // pstmt.executeQuery();
+                        // COMPLETED
+                        pstmt = listDeptCourses(conn);
+                        pstmt.executeQuery();
                         break;
                     case "6":
-                        // TODO
-                        // pstmt = addGrade(conn);
-                        // pstmt.executeUpdate();
+                        // COMPLETED
+                        pstmt = addGrade(conn);
+                        pstmt.executeUpdate();
                         break;
                     case "7":
                         System.out.println("Exiting");
