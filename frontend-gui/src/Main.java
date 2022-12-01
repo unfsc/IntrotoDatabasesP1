@@ -355,8 +355,12 @@ public class Main {
 
     private static PreparedStatement addGrade(Connection conn) {
         PreparedStatement pstmt = conn.prepareStatement(
-                "UPDATE ENROLLED_IN SET grade_earned = ? WHERE N_NUMBER = ?");
-                
+                "UPDATE ENROLLED_IN SET grade_earned = ? " +
+                    "WHERE N_NUMBER = ?"+
+                    "and course_number = ?"+
+                    "and semester = ?"+ 
+                    "and year = ?");
+
         return pstmt;
     }
 
