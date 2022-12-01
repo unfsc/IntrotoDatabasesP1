@@ -196,30 +196,20 @@ public class Main {
     }
 
     public static PreparedStatement addDepartment(Connection conn) throws SQLException {
-        // PreparedStatement pstmt = conn.prepareStatement(
-        // "INSERT INTO DEPARTMENT (DEPT_CODE, DEPT_NAME, OFFICE_NO, OFFICE_PHONE,
-        // COLLEGE)" +
-        // "VALUES (? ? ? ? ?)");
         PreparedStatement pstmt = conn.prepareStatement(
-                "INSERT INTO DEPARTMENT (DEPT_CODE, DEPT_NAME, OFFICE_NO, OFFICE_PHONE, COLLEGE)" +
-                        "VALUES (? ? ? ? ?)");
+                "INSERT INTO DEPARTMENT (DEPT_CODE, DEPT_NAME, OFFICE_NO, OFFICE_PHONE, COLLEGE) " +
+                        "VALUES (?, ?, ?, ?, ?)");
 
-        // System.out.println("Enter the department's code: ");
-        // String deptCode = getString();
-        // System.out.println("Enter the department's name: ");
-        // String deptName = getString();
-        // System.out.println("Enter the department's office number: ");
-        // String officeNumber = getInt();
-        // System.out.println("Enter the department's office phone number: ");
-        // String officePhone = getString();
-        // System.out.println("Enter the department's college: ");
-        // String college = getString();
-
-        String deptCode = "CS";
-        String deptName = "Computer Science";
-        String officeNumber = "1167";
-        String officePhone = "904-567-1234";
-        String college = "Engineering";
+        System.out.println("Enter the department's code: ");
+        String deptCode = getString();
+        System.out.println("Enter the department's name: ");
+        String deptName = getString();
+        System.out.println("Enter the department's office number: ");
+        String officeNumber = getString();
+        System.out.println("Enter the department's office phone number: ");
+        String officePhone = getString();
+        System.out.println("Enter the department's college: ");
+        String college = getString();
 
         pstmt.setString(1, deptCode);
         pstmt.setString(2, deptName);
